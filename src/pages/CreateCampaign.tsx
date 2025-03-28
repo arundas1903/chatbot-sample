@@ -16,7 +16,6 @@ import {
   Tooltip,
 } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import TemplateMessageBody from '../components/TemplateMessageBody';
 import MessagePreviewPopup from '../components/MessagePreviewPopup';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import CampaignConfirmationPopup from '../components/CampaignConfirmationPopup';
@@ -256,10 +255,6 @@ export default function CreateCampaign() {
   const isSMSChannel = (channel: string): channel is 'sms' => channel === 'sms';
 
   const handleCreateCampaign = () => {
-    // Calculate budget based on audience count and channel
-    const costPerMessage = formData.aiChannel === 'sms' ? 0.05 : 0.10; // Example costs
-    const budget = (parseInt(formData.aiCount) * costPerMessage).toFixed(2);
-
     setConfirmationOpen(true);
   };
 

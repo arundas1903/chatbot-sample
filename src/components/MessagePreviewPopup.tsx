@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Popover,
@@ -17,21 +16,23 @@ interface MessagePreviewPopupProps {
 const sampleMessages = [
   {
     name: 'John Doe',
-    message: 'Hi John! 🎉 We\'re excited to announce our new summer collection! Check out our latest styles at [link]. Use code SUMMER20 for 20% off!'
+    message: 'Hi! I saw your new product launch. When will it be available?'
   },
   {
-    name: 'Sarah Smith',
-    message: 'Hello Sarah! 🌟 Your personalized shopping experience awaits! We\'ve curated items just for you based on your preferences. Shop now: [link]'
+    name: 'Jane Smith',
+    message: 'Hello! I received my order #12345. Thanks for the quick delivery!'
   },
   {
     name: 'Mike Johnson',
-    message: 'Hey Mike! 🛍️ Your cart is waiting! Don\'t miss out on these amazing deals. Complete your purchase now and get free shipping!'
+    message: 'Hey there! I\'m interested in your loyalty program. Can you tell me more?'
   }
 ];
 
-export default function MessagePreviewPopup({ anchorEl, onClose, onSelectMessage }: MessagePreviewPopupProps) {
-  const open = Boolean(anchorEl);
-
+export default function MessagePreviewPopup({
+  anchorEl,
+  onClose,
+  onSelectMessage,
+}: MessagePreviewPopupProps) {
   const handleMessageClick = (message: string) => {
     onSelectMessage(message);
     onClose();
@@ -39,7 +40,7 @@ export default function MessagePreviewPopup({ anchorEl, onClose, onSelectMessage
 
   return (
     <Popover
-      open={open}
+      open={Boolean(anchorEl)}
       anchorEl={anchorEl}
       onClose={onClose}
       anchorOrigin={{
@@ -51,35 +52,32 @@ export default function MessagePreviewPopup({ anchorEl, onClose, onSelectMessage
         horizontal: 'right',
       }}
     >
-      <Box sx={{ p: 2, width: 320 }}>
+      <Box sx={{ p: 2, maxWidth: 400 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h6">AI Message Preview</Typography>
+          <Typography variant="h6">Sample Messages</Typography>
           <IconButton size="small" onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Box>
-
-        {sampleMessages.map((sample, index) => (
+        
+        {sampleMessages.map((msg, index) => (
           <Paper
             key={index}
-            onClick={() => handleMessageClick(sample.message)}
             sx={{
               p: 2,
               mb: 2,
-              backgroundColor: '#f5f5f5',
-              borderRadius: 2,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
               cursor: 'pointer',
               '&:hover': {
-                backgroundColor: '#e0e0e0',
+                backgroundColor: 'action.hover',
               },
             }}
+            onClick={() => handleMessageClick(msg.message)}
           >
-            <Typography variant="subtitle2" sx={{ mb: 1, color: 'primary.main' }}>
-              {sample.name}
+            <Typography variant="subtitle2" color="primary" gutterBottom>
+              {msg.name}
             </Typography>
-            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
-              {sample.message}
+            <Typography variant="body2">
+              {msg.message}
             </Typography>
           </Paper>
         ))}
