@@ -151,7 +151,7 @@ export default function CreateCampaign() {
   const [previewAnchorEl, setPreviewAnchorEl] = useState<HTMLElement | null>(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
@@ -214,10 +214,6 @@ export default function CreateCampaign() {
   };
 
   const handlePublish = () => {
-    // Calculate budget based on audience count and channel
-    const costPerMessage = formData.channel === 'sms' ? 0.05 : 0.10; // Example costs
-    const budget = (parseInt(formData.aiCount) * costPerMessage).toFixed(2);
-
     setConfirmationOpen(true);
   };
 
@@ -251,8 +247,6 @@ export default function CreateCampaign() {
       messageBody: message
     }));
   };
-
-  const isSMSChannel = (channel: string): channel is 'sms' => channel === 'sms';
 
   const handleCreateCampaign = () => {
     setConfirmationOpen(true);

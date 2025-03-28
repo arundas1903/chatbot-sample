@@ -62,12 +62,16 @@ export default function Campaigns() {
 
   const handleEdit = () => {
     handleMenuClose();
-    // Implement edit functionality
+    if (selectedCampaign) {
+      navigate(`/edit-campaign/${selectedCampaign.id}`);
+    }
   };
 
   const handleDelete = () => {
     handleMenuClose();
-    // Implement delete functionality
+    if (selectedCampaign) {
+      console.log(`Deleting campaign: ${selectedCampaign.id}`);
+    }
   };
 
   return (
