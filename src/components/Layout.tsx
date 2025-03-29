@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import {
   Menu as MenuIcon,
-  Campaign as CampaignIcon,
   ChevronLeft as ChevronLeftIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -45,11 +44,18 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   }),
 }));
 
-interface LayoutProps {
-  children: React.ReactNode;
+interface MenuItem {
+  text: string;
+  icon: React.ReactNode;
+  path: string;
 }
 
-export default function Layout({ children }: LayoutProps) {
+interface LayoutProps {
+  children: React.ReactNode;
+  menuItems: MenuItem[];
+}
+
+export default function Layout({ children, menuItems }: LayoutProps) {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
 
@@ -104,14 +110,16 @@ export default function Layout({ children }: LayoutProps) {
           </IconButton>
           <Divider />
           <List>
-            <ListItem disablePadding>
-              <ListItemButton onClick={() => navigate('/')}>
-                <ListItemIcon>
-                  <CampaignIcon />
-                </ListItemIcon>
-                <ListItemText primary="Campaigns" />
-              </ListItemButton>
-            </ListItem>
+            {menuItems.map((item) => (
+              <ListItem key={item.text} disablePadding>
+                <ListItemButton onClick={() => navigate(item.path)}>
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
         </Box>
       </Drawer>

@@ -19,6 +19,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import MessagePreviewPopup from '../components/MessagePreviewPopup';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import CampaignConfirmationPopup from '../components/CampaignConfirmationPopup';
+import CampaignFeedbackPopup from '../components/CampaignFeedbackPopup';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -150,6 +151,7 @@ export default function CreateCampaign() {
   });
   const [previewAnchorEl, setPreviewAnchorEl] = useState<HTMLElement | null>(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -254,6 +256,15 @@ export default function CreateCampaign() {
 
   const handleConfirmationClose = () => {
     setConfirmationOpen(false);
+    // Show feedback popup only for AI campaigns
+    if (tabValue === 1) {
+      setFeedbackOpen(true);
+    }
+  };
+
+  const handleFeedback = (isHelpful: boolean) => {
+    // Here you can send the feedback to your backend
+    console.log('AI Campaign Feedback:', isHelpful);
   };
 
   const renderAiCampaignStep1 = () => (
@@ -752,6 +763,12 @@ export default function CreateCampaign() {
           count: formData.aiCount,
           budget: (parseInt(formData.aiCount) * (formData.channel === 'sms' ? 0.05 : 0.10)).toFixed(2),
         }}
+      />
+
+      <CampaignFeedbackPopup
+        open={feedbackOpen}
+        onClose={() => setFeedbackOpen(false)}
+        onFeedback={handleFeedback}
       />
     </Box>
   );
