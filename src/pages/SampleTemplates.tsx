@@ -16,7 +16,7 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material';
-import { sampleTemplates, SampleTemplate } from '../data/sampleTemplates';
+import { sampleTemplates } from '../data/sampleTemplates';
 
 export default function SampleTemplates() {
   const [page, setPage] = useState(1);
